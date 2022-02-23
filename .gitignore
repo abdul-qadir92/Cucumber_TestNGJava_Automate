@@ -1,0 +1,6 @@
+/src/test/resources/Reports/**
+/Reports/
+/test-output/pdfReports/**
+/test-output/SparkReport/**
+/test-output/*.png
+/target/**

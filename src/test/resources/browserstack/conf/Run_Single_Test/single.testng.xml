@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parallel Search" thread-count="5" parallel="tests">
+    <test name="AmazonTest">
+        <parameter name="config" value="Run_Single_Test/single.conf.json"/>
+        <parameter name="environment" value="env"/>
+        <classes>
+            <class name="Runner.CucumberTest"/>
+        </classes>
+    </test>
+</suite>

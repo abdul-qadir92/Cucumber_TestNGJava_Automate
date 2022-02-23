@@ -1,0 +1,26 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "user": "abdulqadirkhande_5QjKSy",
+  "key": "vePUAny3y5yaMQ2xNBtf",
+
+  "capabilities": {
+    "projectName": "BDD",
+    "buildName": "BDDSingle",
+    "sessionName": "BS Suite",
+    "debug": "true",
+    "networkLogs": "true",
+    "seleniumVersion": "4.0.0",
+    "consoleLogs": "errors"
+  },
+
+  "environments": {
+    "env": {
+      "browser": "Chrome",
+      "browser_version": "latest",
+      "envOptions": {
+        "os": "Windows",
+        "osVersion": "10"
+      }
+    }
+  }
+}
