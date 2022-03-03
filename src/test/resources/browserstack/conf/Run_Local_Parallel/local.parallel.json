@@ -5,34 +5,34 @@
 
   "capabilities": {
     "projectName": "BDD",
-    "buildName": "BDDParallel-4",
+    "buildName": "BDD-Local-Parallel-7",
     "sessionName": "BS Suite",
+    "local": "true",
     "debug": "true",
     "networkLogs": "true",
-    "seleniumVersion": "4.0.0",
     "consoleLogs": "errors"
   },
 
   "environments": {
     "env1": {
-        "browser": "Edge",
-        "browser_version": "latest",
-        "envOptions": {
-          "os": "Windows",
-          "osVersion": "11"
-        }
+      "browser": "Safari",
+      "browser_version": "15.0",
+      "envOptions": {
+        "os": "OS X",
+        "osVersion": "Monterey"
+      }
     },
     "env2":{
-         "browser": "Safari",
-         "browser_version": "15.0",
-         "envOptions": {
-           "os": "OS X",
-           "osVersion": "Monterey"
-         }
+      "browser": "Edge",
+      "browser_version": "latest",
+      "envOptions": {
+        "os": "Windows",
+        "osVersion": "11"
+      }
     },"env3":{
       "envOptions": {
-        "osVersion": "14",
-        "deviceName": "iPhone 12",
+        "osVersion": "15",
+        "deviceName": "iPhone XS",
         "realMobile": "true"
       }
     },

@@ -10,9 +10,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class E2ESteps {
@@ -36,7 +38,17 @@ public class E2ESteps {
     }
     @Given("User is on home page")
     public void user_is_on_home_page() {
-        hooks.driver.get(System.getProperties().getProperty("Application_url"));
+        JavascriptExecutor jse = (JavascriptExecutor) hooks.driver;
+        Map<String,String> deviceInfo = new HashMap<>();
+        try{
+            deviceInfo = (Map<String, String>) jse.executeScript("mobile:deviceInfo");
+        }catch(Exception e){
+            deviceInfo = null;
+        }
+        if(deviceInfo !=null && deviceInfo.get("model").toLowerCase().matches(".*(iphone|ipad).*"))
+            hooks.driver.get(System.getProperties().getProperty("Application_url").replaceAll("localhost","bs-local.com"));
+        else
+            hooks.driver.get(System.getProperties().getProperty("Application_url"));
     }
     @When("User clicks on sign in link")
     public void user_clicks_on_sign_in_link() {

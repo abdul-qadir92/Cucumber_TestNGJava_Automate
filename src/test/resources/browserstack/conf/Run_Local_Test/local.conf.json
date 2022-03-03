@@ -1,13 +1,12 @@
-
 {
   "server": "hub-cloud.browserstack.com",
-  "user": "abdulqadirkhande_5QjKSy",
-  "key": "vePUAny3y5yaMQ2xNBtf",
+  "user": "",
+  "key": "",
 
   "capabilities": {
     "projectName": "BDD Cucumber",
-    "buildName": "Local_BS_BDD",
-    "sessionName": "Single_Test",
+    "buildName": "Local_BS_BDD_2",
+    "sessionName": "Local_Test",
     "debug": "true",
     "networkLogs": "true",
     "consoleLogs":"errors",

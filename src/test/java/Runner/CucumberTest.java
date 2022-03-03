@@ -10,6 +10,7 @@ import io.cucumber.testng.TestNGCucumberRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -18,7 +19,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.*;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -35,21 +38,20 @@ public class CucumberTest {
        private TestNGCucumberRunner testNGCucumberRunner;
        public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
        private Local l;
-       @BeforeClass(alwaysRun = true)
-       public void setUpClass() {
-              testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
-       }
-       @BeforeTest
+       @BeforeSuite
        public void localStart() throws Exception {
               if (System.getProperties().get("local").toString().contains("true")){
                      JSONParser parser = new JSONParser();
                      JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/Run_Local_Test/local.conf.json"));
-                     System.out.println("Starting Local");
                      l = new Local();
                      Map<String, String> options = new HashMap<String, String>();
                      options.put("key", (String) config.get("key"));
                      l.start(options);
               }
+       }
+       @BeforeClass(alwaysRun = true)
+       public void setUpClass() {
+              testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
        }
        @Parameters(value = { "config", "environment" })
        @BeforeMethod()
@@ -97,6 +99,9 @@ public class CucumberTest {
        @AfterClass(alwaysRun = true)
        public void tearDownClass() throws Exception {
               testNGCucumberRunner.finish();
+       }
+       @AfterSuite
+       public void shutLocal() throws Exception {
               System.out.println("Stopping Local");
               if(l != null) l.stop();
        }

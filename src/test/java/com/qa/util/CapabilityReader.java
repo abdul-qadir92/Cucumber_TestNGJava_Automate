@@ -42,13 +42,13 @@ public class CapabilityReader {
             accessKey = (String) config.get("key");
         }
 
-        if (capabilities.getCapability("browserstack.local") != null
+        /*if (capabilities.getCapability("browserstack.local") != null
                 && capabilities.getCapability("browserstack.local") == "true") {
             l = new Local();
             Map<String, String> options = new HashMap<String, String>();
             options.put("key", accessKey);
             l.start(options);
-        }
+        }*/
         // Set the name of test to tags in maven
         if(System.getProperties().getProperty("cucumber.filter.tags")!=null){
             browserstackOptions.put("sessionName",System.getProperties().getProperty("cucumber.filter.tags"));

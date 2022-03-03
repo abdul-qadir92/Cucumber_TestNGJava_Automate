@@ -18,7 +18,7 @@
         <cucumber.filter.tags></cucumber.filter.tags>
         <browser-type></browser-type>
         <suiteXmlFile></suiteXmlFile>
-        <Application_url>http://localhost:3000/</Application_url>
+        <Application_url>https://bstackdemo.com/</Application_url>
         <local></local>
     </properties>
 
@@ -111,14 +111,6 @@
         <profile>
             <id>scenario-bs</id>
             <properties>
-                <cucumber.filter.tags>@fail</cucumber.filter.tags>
-                <browser-type>remote</browser-type>
-                <suiteXmlFile>src/test/resources/browserstack/conf/Run_Single_Test/single.testng.xml</suiteXmlFile>
-            </properties>
-        </profile>
-        <profile>
-            <id>Suite-bs</id>
-            <properties>
                 <cucumber.filter.tags>@regression</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Single_Test/single.testng.xml</suiteXmlFile>
@@ -139,6 +131,15 @@
                 <cucumber.filter.tags>@regression</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Local_Test/local.testng.xml</suiteXmlFile>
+            </properties>
+        </profile>
+        <profile>
+            <id>local-cross-bs</id>
+            <properties>
+                <local>true</local>
+                <cucumber.filter.tags>@regression</cucumber.filter.tags>
+                <browser-type>remote</browser-type>
+                <suiteXmlFile>src/test/resources/browserstack/conf/Run_Local_Parallel/localParallel.testng.xml</suiteXmlFile>
             </properties>
         </profile>
     </profiles>
