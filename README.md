@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This BrowserStack Example repository demonstrates a Selenium 4 [Page Factory Model](https://www.browserstack.com/guide/page-object-model-in-selenium wrapped under Cucumber and TestNG with parallel testing capabilities. The Selenium test scripts are written for the open source [BrowserStack Demo web application](https://bstackdemo.com) ([Github](https://github.com/browserstack/browserstack-demo-app)). This BrowserStack Demo App is an e-commerce web application which showcases multiple real-world user scenarios, written in Next and React. The app is bundled with offers data, orders data and products data that contains everything you need to start using the app and run tests out-of-the-box.
+This BrowserStack Example repository demonstrates a Selenium 4 [Page Factory Model](https://www.browserstack.com/guide/page-object-model-in-selenium) wrapped under Cucumber and TestNG with parallel testing capabilities. The Selenium test scripts are written for the open source [BrowserStack Demo web application](https://bstackdemo.com) ([Github](https://github.com/browserstack/browserstack-demo-app)). This BrowserStack Demo App is an e-commerce web application which showcases multiple real-world user scenarios, written in Next and React. The app is bundled with offers data, orders data and products data that contains everything you need to start using the app and run tests out-of-the-box.
 
 The Selenium tests are run on different platforms like on-prem and BrowserStack using various run configurations and test capabilities.
 
