@@ -70,7 +70,7 @@ Set the `<Application_url></Application_url>` properties in the pom.xml to
 # Test Reporting
 
 - [Extent reports](https://ghchirp.tech/2098/)
-- Reports in HTML and PDF formats are generated in the [Reports](resources/Reports) with TimeStamp.
+- Reports in HTML and PDF formats are generated in the [Reports](src/test/resources/Reports) with TimeStamp.
 ---
 # On Premise or Self Hosted
 
@@ -126,10 +126,10 @@ This infrastructure points to running the tests on your own machine using any br
   ```
 
   Alternatively, you can also hardcode username and access_key objects in the respective json files:
-  - [single.conf.json](resources/browserstack/conf/Run_Single_Test/single.conf.json) file
-  - [parallel.conf.json](resources/browserstack/conf/Run_Parallel_Test/parallel.conf.json) file
-  - [local.conf.json](resources/browserstack/conf/Run_Local_Test/local.conf.json) file
-  - [local.parallel.json](resources/browserstack/conf/Run_Local_Parallel/local.parallel.json) file
+  - [single.conf.json](src/test/resources/browserstack/conf/Run_Single_Test/single.conf.json) file
+  - [parallel.conf.json](src/test/resources/browserstack/conf/Run_Parallel_Test/parallel.conf.json) file
+  - [local.conf.json](src/test/resources/browserstack/conf/Run_Local_Test/local.conf.json) file
+  - [local.parallel.json](src/test/resources/browserstack/conf/Run_Local_Parallel/local.parallel.json) file
 
 
 Note:
@@ -141,7 +141,7 @@ Note:
 
 ### Run a specific test/entire test suite in parallel on a single BrowserStack browser
 
-In this section, we will run the tests in parallel on a single browser on Browserstack. Refer to [single.conf.json](resources/browserstack/conf/Run_Single_Test/single.conf.json) file to change test capabilities for this configuration.
+In this section, we will run the tests in parallel on a single browser on Browserstack. Refer to [single.conf.json](src/test/resources/browserstack/conf/Run_Single_Test/single.conf.json) file to change test capabilities for this configuration.
 
 - How to run the test?
 
@@ -154,18 +154,18 @@ In this section, we will run the tests in parallel on a single browser on Browse
   mvn test -P scenario-bs
   ```
 	
-	You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
+	You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
 
 - Output
 
   This run profile executes any scenario/entire test suite in parallel on a single BrowserStack browser. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
-  - Note: By default, this execution would run maximum 5 test threads in parallel on BrowserStack. Thread count can be configured from [here](resources/browserstack/conf/Run_Single_Test/single.testng.xml) based on your requirements.
+  - Note: By default, this execution would run maximum 5 test threads in parallel on BrowserStack. Thread count can be configured from [here](src/test/resources/browserstack/conf/Run_Single_Test/single.testng.xml) based on your requirements.
 
 
 ### Run the entire test suite in parallel on multiple BrowserStack browsers
 
-In this section, we will run the tests in parallel on multiple browsers on Browserstack. Refer to the [parallel.conf.json](resources/browserstack/conf/Run_Parallel_Test/parallel.conf.json) file to change test capabilities for this configuration.
+In this section, we will run the tests in parallel on multiple browsers on Browserstack. Refer to the [parallel.conf.json](src/test/resources/browserstack/conf/Run_Parallel_Test/parallel.conf.json) file to change test capabilities for this configuration.
 
 - How to run the test?
 
@@ -178,7 +178,7 @@ In this section, we will run the tests in parallel on multiple browsers on Brows
   mvn test -P Suite-cross-bs
   ```
 
-	You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel across multiple browsers/devices.
+	You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel across multiple browsers/devices.
 ---	
 ### [Web application hosted on internal environment] Running your tests on BrowserStack using BrowserStackLocal
 
@@ -189,7 +189,7 @@ In this section, we will run the tests in parallel on multiple browsers on Brows
   git clone https://github.com/browserstack/browserstack-demo-app
   ``` 
 - Please follow the README.md on the BrowserStack demo application repository to install and start the dev server on localhost.
-- In this section, we will run a single test case to test the BrowserStack Demo app hosted on your local machine i.e. localhost. Refer to the [local.conf.json](resources/browserstack/conf/Run_Local_Test/local.conf.json) file to change test capabilities for this configuration.
+- In this section, we will run a single test case to test the BrowserStack Demo app hosted on your local machine i.e. localhost. Refer to the [local.conf.json](src/test/resources/browserstack/conf/Run_Local_Test/local.conf.json) file to change test capabilities for this configuration.
 - Note: You may need to provide additional BrowserStackLocal arguments to successfully connect your localhost environment with BrowserStack infrastructure. (e.g if you are behind firewalls, proxy or VPN).
 - Further details for successfully creating a BrowserStackLocal connection can be found here:
 
@@ -214,7 +214,7 @@ Set the `<Application_url></Application_url>` properties in the pom.xml to your 
   mvn test -P local-bs
   ```
 
-You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
+You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
 
 - Output
 
@@ -244,7 +244,7 @@ In this section, we will run the test cases to test the internally hosted websit
 
   This run profile executes the entire test suite on an internally hosted web application on multiple browsers on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
-- Note: By default, this execution would run maximum 5 test threads in parallel on BrowserStack. Thread count can be configured from [here](resources/browserstack/conf/Run_Local_Parallel/localParallel.testng.xml) based on your requirements.
+- Note: By default, this execution would run maximum 5 test threads in parallel on BrowserStack. Thread count can be configured from [here](src/test/resources/browserstack/conf/Run_Local_Parallel/localParallel.testng.xml) based on your requirements.
 
 
 ## Additional Resources
