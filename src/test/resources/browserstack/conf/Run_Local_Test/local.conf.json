@@ -4,7 +4,7 @@
   "key": "",
 
   "capabilities": {
-    "projectName": "BDD Cucumber",
+    "projectName": "Local BDD",
     "buildName": "Local_BS_BDD_2",
     "sessionName": "Local_Test",
     "debug": "true",

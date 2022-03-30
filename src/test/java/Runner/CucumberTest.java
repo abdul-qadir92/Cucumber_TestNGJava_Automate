@@ -38,14 +38,17 @@ public class CucumberTest {
        private TestNGCucumberRunner testNGCucumberRunner;
        public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
        private Local l;
+       @Parameters(value = {"config"})
        @BeforeSuite
-       public void localStart() throws Exception {
-              if (System.getProperties().get("local").toString().contains("true")){
+       public void localStart(@Optional String config_file) throws Exception {
+              if (System.getProperties().get("local").toString().contains("true") && config_file.toLowerCase().contains("local")){
                      JSONParser parser = new JSONParser();
-                     JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/Run_Local_Test/local.conf.json"));
+                     JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/"+config_file));
                      l = new Local();
                      Map<String, String> options = new HashMap<String, String>();
                      options.put("key", (String) config.get("key"));
+                     if(System.getenv("BROWSERSTACK_LOCAL")!=null)
+                            options.put("key", System.getenv("BROWSERSTACK_LOCAL"));
                      l.start(options);
               }
        }

@@ -1,10 +1,11 @@
 package com.qa.util;
 
 import com.browserstack.local.Local;
-import io.cucumber.java.Scenario;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,7 +30,9 @@ public class CapabilityReader {
             Map.Entry pair = (Map.Entry) it.next();
             browserstackOptions.put(pair.getKey().toString(), pair.getValue().toString());
         }
-
+        // Set the build name for tests
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
+        browserstackOptions.put("buildName",browserstackOptions.get("projectName")+"-"+sdf.format(new Date()));
         if (System.getenv("BROWSERSTACK_BUILD_NAME") != null) {
             browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME").toString());
         }
@@ -49,6 +52,7 @@ public class CapabilityReader {
             options.put("key", accessKey);
             l.start(options);
         }*/
+
         // Set the name of test to tags in maven
         if(System.getProperties().getProperty("cucumber.filter.tags")!=null){
             browserstackOptions.put("sessionName",System.getProperties().getProperty("cucumber.filter.tags"));
