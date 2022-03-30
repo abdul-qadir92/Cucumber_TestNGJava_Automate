@@ -1,6 +1,6 @@
 ![Logo](https://www.browserstack.com/images/static/header-logo.jpg)
 
-# BrowserStack Examples Cucumber TestNG Selenium 4 <a href="https://cucumber.io"><img src="https://github.com/abdul-qadir92/Cucumber_TestNGJava_Automate/blob/develop/cucumber-testing-tutorial.png" alt="Cucumber" height="22" /></a> <a href="https://testng.org/"><img src="https://github.com/abdul-qadir92/Cucumber_TestNGJava_Automate/blob/develop/testng1%20(1).png" alt="TestNG" height="22" /></a>
+# BrowserStack Examples Cucumber TestNG Selenium 4 <a href="https://cucumber.io"><img src="https://avatars.githubusercontent.com/u/320565?s=200&v=4" alt="Cucumber" height="22" /></a> <a href="https://testng.org/"><img src="https://4.bp.blogspot.com/-yjCdQKv58cM/Wg9EsvVibuI/AAAAAAAAErc/0VeSAT2tp18JDUFNxD5lK87jKK6fT0UNACLcBGAs/s1600/1.png" alt="TestNG" height="22" /></a>
 
 ## Introduction
 
