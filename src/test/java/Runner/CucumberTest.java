@@ -10,7 +10,6 @@ import io.cucumber.testng.TestNGCucumberRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -19,13 +18,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.*;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 @CucumberOptions(features = "src/test/resources/Features", glue = {"StepDefinitions"},
@@ -41,7 +37,7 @@ public class CucumberTest {
        @Parameters(value = {"config"})
        @BeforeSuite
        public void localStart(@Optional String config_file) throws Exception {
-              if (System.getProperties().get("local").toString().contains("true") && config_file.toLowerCase().contains("local")){
+              if (System.getProperties().get("local").toString().contains("true") /*&& config_file.toLowerCase().contains("local")*/){
                      JSONParser parser = new JSONParser();
                      JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/"+config_file));
                      l = new Local();

@@ -1,7 +1,7 @@
 {
   "server": "hub-cloud.browserstack.com",
-  "user": "",
-  "key": "",
+  "user": "abdulqadirkhande_5QjKSy",
+  "key": "vePUAny3y5yaMQ2xNBtf",
 
   "capabilities": {
     "projectName": "Local BDD",
@@ -15,11 +15,11 @@
 
   "environments": {
     "env": {
-      "browserName": "Chrome",
+      "browserName": "Safari",
       "browserVersion": "latest",
       "envOptions": {
-        "os": "Windows",
-        "osVersion": "10"
+        "os": "OS X",
+        "osVersion": "Monterey"
       }
     }
   }

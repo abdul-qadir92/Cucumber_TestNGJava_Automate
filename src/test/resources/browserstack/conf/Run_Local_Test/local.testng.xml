@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite" thread-count="5" parallel="tests">
+    <parameter name="config" value="Run_Local_Test/local.conf.json"/>
     <test verbose="2" name="LocalTesT">
         <parameter name="config" value="Run_Local_Test/local.conf.json"/>
         <parameter name="environment" value="env"/>
