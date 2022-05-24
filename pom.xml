@@ -18,7 +18,7 @@
         <cucumber.filter.tags></cucumber.filter.tags>
         <browser-type></browser-type>
         <suiteXmlFile></suiteXmlFile>
-        <Application_url>http://localhost:3000/</Application_url>
+        <Application_url>https://bstackdemo.com/</Application_url>
         <local></local>
     </properties>
 

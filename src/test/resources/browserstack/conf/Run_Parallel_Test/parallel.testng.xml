@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Parallel Suite BDD" thread-count="5" parallel="tests">
+<suite name="Parallel Suite BDD" thread-count="10" parallel="tests">
     <parameter name="config" value="Run_Parallel_Test/parallel.conf.json"/>
     <test name="BSTestEnv1">
         <parameter name="config" value="Run_Parallel_Test/parallel.conf.json"/>
