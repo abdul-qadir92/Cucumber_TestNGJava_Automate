@@ -37,12 +37,12 @@ public class CapabilityReader {
             browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME").toString());
         }
 
-        String username = System.getenv("BROWSERSTACK_USERNAME");
-        if (username == null) username = (String) config.get("user");
+        String username = (String) config.get("user");
+        if (username == null || username.isEmpty()) username = (String)System.getenv("BROWSERSTACK_USERNAME");
 
-        String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-        if (accessKey == null) {
-            accessKey = (String) config.get("key");
+        String accessKey = (String) config.get("key");
+        if (accessKey == null || accessKey.isEmpty()) {
+            accessKey = (String) System.getenv("BROWSERSTACK_ACCESS_KEY");
         }
 
         /*if (capabilities.getCapability("browserstack.local") != null

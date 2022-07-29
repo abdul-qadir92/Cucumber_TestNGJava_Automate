@@ -128,8 +128,9 @@
             <id>local-bs</id>
             <properties>
                 <local>true</local>
-                <cucumber.filter.tags>@regression</cucumber.filter.tags>
+                <cucumber.filter.tags>@e2e</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
+                <Application_url>http://localhost:3000/</Application_url>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Local_Test/local.testng.xml</suiteXmlFile>
             </properties>
         </profile>
@@ -137,8 +138,9 @@
             <id>local-cross-bs</id>
             <properties>
                 <local>true</local>
-                <cucumber.filter.tags>@regression</cucumber.filter.tags>
+                <cucumber.filter.tags>@users</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
+                <Application_url>http://localhost:3000/</Application_url>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Local_Parallel/localParallel.testng.xml</suiteXmlFile>
             </properties>
         </profile>

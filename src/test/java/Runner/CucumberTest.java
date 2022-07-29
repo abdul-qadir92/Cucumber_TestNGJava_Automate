@@ -42,7 +42,9 @@ public class CucumberTest {
                      JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/"+config_file));
                      l = new Local();
                      Map<String, String> options = new HashMap<String, String>();
-                     options.put("key", (String) config.get("key"));
+                     options.put("key", System.getenv("BROWSERSTACK_ACCESS_KEY"));
+                     if (System.getenv("BROWSERSTACK_ACCESS_KEY") == null)
+                            options.put("key", (String) config.get("key"));
                      if(System.getenv("BROWSERSTACK_LOCAL")!=null)
                             options.put("key", System.getenv("BROWSERSTACK_LOCAL"));
                      l.start(options);
