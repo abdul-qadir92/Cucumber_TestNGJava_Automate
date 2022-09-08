@@ -9,8 +9,8 @@
     "sessionName": "Local_Test",
     "debug": "true",
     "networkLogs": "true",
-    "consoleLogs":"errors",
-    "local": "true"
+    "local": true ,
+    "consoleLogs":"errors"
   },
 
   "environments": {

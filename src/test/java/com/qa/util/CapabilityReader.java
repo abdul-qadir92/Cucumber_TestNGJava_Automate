@@ -1,5 +1,6 @@
 package com.qa.util;
 
+import Runner.CucumberTest;
 import com.browserstack.local.Local;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -31,31 +32,11 @@ public class CapabilityReader {
             browserstackOptions.put(pair.getKey().toString(), pair.getValue().toString());
         }
         // Set the build name for tests
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
-        browserstackOptions.put("buildName",browserstackOptions.get("projectName")+"-"+sdf.format(new Date()));
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
+        //browserstackOptions.put("buildName",browserstackOptions.get("projectName")+"-"+sdf.format(new Date()));
+        browserstackOptions.put("buildName",CucumberTest.buildname);
         if (System.getenv("BROWSERSTACK_BUILD_NAME") != null) {
             browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME").toString());
-        }
-
-        String username = (String) config.get("user");
-        if (username == null || username.isEmpty()) username = (String)System.getenv("BROWSERSTACK_USERNAME");
-
-        String accessKey = (String) config.get("key");
-        if (accessKey == null || accessKey.isEmpty()) {
-            accessKey = (String) System.getenv("BROWSERSTACK_ACCESS_KEY");
-        }
-
-        /*if (capabilities.getCapability("browserstack.local") != null
-                && capabilities.getCapability("browserstack.local") == "true") {
-            l = new Local();
-            Map<String, String> options = new HashMap<String, String>();
-            options.put("key", accessKey);
-            l.start(options);
-        }*/
-
-        // Set the name of test to tags in maven
-        if(System.getProperties().getProperty("cucumber.filter.tags")!=null){
-            browserstackOptions.put("sessionName",System.getProperties().getProperty("cucumber.filter.tags"));
         }
 
         capabilities.setCapability("bstack:options", browserstackOptions);

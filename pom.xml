@@ -15,11 +15,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <testng.version>7.4.0</testng.version>
         <surefire.version>3.0.0-M5</surefire.version>
-        <cucumber.filter.tags></cucumber.filter.tags>
         <browser-type></browser-type>
         <suiteXmlFile></suiteXmlFile>
         <Application_url>https://bstackdemo.com/</Application_url>
-        <local></local>
     </properties>
 
     <dependencies>
@@ -76,6 +74,11 @@
             <artifactId>browserstack-local-java</artifactId>
             <version>1.0.6</version>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.10</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -89,9 +92,7 @@
                         <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <systemProperties>
-                        <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                         <browser-type>${browser-type}</browser-type>
-                        <local>${local}</local>
                         <Application_url>${Application_url}</Application_url>
                     </systemProperties>
                 </configuration>
@@ -103,7 +104,6 @@
         <profile>
             <id>scenario-onprem</id>
             <properties>
-                <cucumber.filter.tags>@regression</cucumber.filter.tags>
                 <browser-type>firefox</browser-type>
                 <suiteXmlFile>testng.xml</suiteXmlFile>
             </properties>
@@ -111,15 +111,13 @@
         <profile>
             <id>scenario-bs</id>
             <properties>
-                <cucumber.filter.tags>@regression</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Single_Test/single.testng.xml</suiteXmlFile>
             </properties>
         </profile>
         <profile>
-            <id>Suite-cross-bs</id>
+            <id>suite-cross-bs</id>
             <properties>
-                <cucumber.filter.tags>@regression</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Parallel_Test/parallel.testng.xml</suiteXmlFile>
             </properties>
@@ -127,8 +125,6 @@
         <profile>
             <id>local-bs</id>
             <properties>
-                <local>true</local>
-                <cucumber.filter.tags>@e2e</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
                 <Application_url>http://localhost:3000/</Application_url>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Local_Test/local.testng.xml</suiteXmlFile>
@@ -137,8 +133,6 @@
         <profile>
             <id>local-cross-bs</id>
             <properties>
-                <local>true</local>
-                <cucumber.filter.tags>@users</cucumber.filter.tags>
                 <browser-type>remote</browser-type>
                 <Application_url>http://localhost:3000/</Application_url>
                 <suiteXmlFile>src/test/resources/browserstack/conf/Run_Local_Parallel/localParallel.testng.xml</suiteXmlFile>

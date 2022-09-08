@@ -1,6 +1,7 @@
 package com.qa.util;
 
 import Runner.CucumberTest;
+import io.cucumber.java.Scenario;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;

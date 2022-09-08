@@ -4,8 +4,8 @@
   "key": "",
 
   "capabilities": {
-    "projectName": "BStackDemo BDD",
-    "buildName": "BDDSingle",
+    "projectName": "Cucumber Java",
+    "buildName": "BStackDemo BDD",
     "sessionName": "BS Suite",
     "debug": "true",
     "networkLogs": "true",
@@ -18,8 +18,8 @@
       "browser": "Chrome",
       "browser_version": "latest",
       "envOptions": {
-        "os": "Windows",
-        "osVersion": "10"
+        "os": "Monterey",
+        "osVersion": "OS X"
       }
     }
   }

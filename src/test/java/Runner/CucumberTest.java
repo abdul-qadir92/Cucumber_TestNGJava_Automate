@@ -10,6 +10,7 @@ import io.cucumber.testng.TestNGCucumberRunner;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,6 +22,8 @@ import org.testng.annotations.*;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,21 +37,26 @@ public class CucumberTest {
        private TestNGCucumberRunner testNGCucumberRunner;
        public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
        private Local l;
+       public static String buildname;
        @Parameters(value = {"config"})
        @BeforeSuite
-       public void localStart(@Optional String config_file) throws Exception {
-              if (System.getProperties().get("local").toString().contains("true") /*&& config_file.toLowerCase().contains("local")*/){
-                     JSONParser parser = new JSONParser();
-                     JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/"+config_file));
+       public void localStart(String config_file) throws Exception {
+              JSONParser parser = new JSONParser();
+              JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/"+config_file));
+              JSONObject local = (JSONObject) config.get("capabilities");
+              boolean localKey = local.containsKey("local");
+              if(localKey && local.get("local").toString().contains("true")) {
                      l = new Local();
                      Map<String, String> options = new HashMap<String, String>();
-                     options.put("key", System.getenv("BROWSERSTACK_ACCESS_KEY"));
                      if (System.getenv("BROWSERSTACK_ACCESS_KEY") == null)
                             options.put("key", (String) config.get("key"));
-                     if(System.getenv("BROWSERSTACK_LOCAL")!=null)
-                            options.put("key", System.getenv("BROWSERSTACK_LOCAL"));
+                     else
+                            options.put("key", System.getenv("BROWSERSTACK_ACCESS_KEY"));
+                     System.out.println("Starting Local");
                      l.start(options);
               }
+              SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
+              buildname = "Cucumber Java"+"-"+sdf.format(new Date());
        }
        @BeforeClass(alwaysRun = true)
        public void setUpClass() {
@@ -76,8 +84,16 @@ public class CucumberTest {
                      envs = (JSONObject) config.get("environments");
                      Object env = envs.get(environment);
                      capabilities = CapabilityReader.getCapability((Map<String, String>) env, config);
+                     String username = (String) config.get("user");
+                     if (username == null || username.isEmpty()){
+                            username = System.getenv("BROWSERSTACK_USERNAME");
+                     }
+                     String accessKey = (String) config.get("key");
+                     if (accessKey == null || accessKey.isEmpty()) {
+                            accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+                     }
                      tlDriver.set( new RemoteWebDriver(
-                             new URL("http://" + config.get("user").toString() + ":" + config.get("key").toString() + "@" + config.get("server") + "/wd/hub"), capabilities));
+                             new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"), capabilities));
               }else
                      throw new AssertionError("Invalid input for browser");
               if(!capabilities.toString().contains("realMobile"))
@@ -88,17 +104,19 @@ public class CucumberTest {
               return tlDriver.get();
        }
 
-       @Test(groups = "cucumber",description = "Runs Cucumber Feature",dataProvider = "scenarios")
+       @Test(dataProvider = "scenarios")
        public void scenario(PickleWrapper pickleWrapper, FeatureWrapper featureWrapper) throws MalformedURLException {
+              JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+              jse.executeScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\" "+       pickleWrapper.getPickle().getName()   +" \" }}");
               testNGCucumberRunner.runScenario(pickleWrapper.getPickle());
-       }
+           }
        @DataProvider(parallel = true)
        public Object[][] scenarios(){
               return testNGCucumberRunner.provideScenarios();
        }
 
        @AfterClass(alwaysRun = true)
-       public void tearDownClass() throws Exception {
+       public void tearDownClass() {
               testNGCucumberRunner.finish();
        }
        @AfterSuite
