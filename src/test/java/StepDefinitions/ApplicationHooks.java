@@ -16,15 +16,7 @@ public class ApplicationHooks extends CucumberTest {
         byte[] sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         sc.attach(sourcePath,"image/png",screenshotName);
     }
-    @After(order=0)
-    public void tearDown(Scenario sc) {
-        /*if(sc.isFailed()){
-            markTestStatus("failed", "Refer to the Automate logs",driver);
-        }else{
-            markTestStatus("passed", "",driver);
-        }
-        driver.quit(); //This is now handled in the listener events*/
-    }
+
     private void markTestStatus(String status, String reason, WebDriver driver) {
         try {
             JavascriptExecutor jse = (JavascriptExecutor) driver;

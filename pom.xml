@@ -104,7 +104,7 @@
         <profile>
             <id>scenario-onprem</id>
             <properties>
-                <browser-type>firefox</browser-type>
+                <browser-type>chrome</browser-type>
                 <suiteXmlFile>testng.xml</suiteXmlFile>
             </properties>
         </profile>

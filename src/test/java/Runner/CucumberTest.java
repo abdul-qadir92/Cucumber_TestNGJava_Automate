@@ -42,21 +42,23 @@ public class CucumberTest {
        @BeforeSuite
        public void localStart(String config_file) throws Exception {
               JSONParser parser = new JSONParser();
-              JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/"+config_file));
-              JSONObject local = (JSONObject) config.get("capabilities");
-              boolean localKey = local.containsKey("local");
-              if(localKey && local.get("local").toString().contains("true")) {
-                     l = new Local();
-                     Map<String, String> options = new HashMap<String, String>();
-                     if (System.getenv("BROWSERSTACK_ACCESS_KEY") == null)
-                            options.put("key", (String) config.get("key"));
-                     else
-                            options.put("key", System.getenv("BROWSERSTACK_ACCESS_KEY"));
-                     System.out.println("Starting Local");
-                     l.start(options);
+              if(!config_file.isEmpty()) {
+                     JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/browserstack/conf/" + config_file));
+                     JSONObject local = (JSONObject) config.get("capabilities");
+                     boolean localKey = local.containsKey("local");
+                     if (localKey && local.get("local").toString().contains("true")) {
+                            l = new Local();
+                            Map<String, String> options = new HashMap<String, String>();
+                            if (System.getenv("BROWSERSTACK_ACCESS_KEY") == null)
+                                   options.put("key", (String) config.get("key"));
+                            else
+                                   options.put("key", System.getenv("BROWSERSTACK_ACCESS_KEY"));
+                            System.out.println("Starting Local");
+                            l.start(options);
+                     }
+                     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
+                     buildname = local.get("projectName") + "-" + sdf.format(new Date());
               }
-              //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
-              //buildname = "Cucumber Java"+"-"+sdf.format(new Date());
        }
        @BeforeClass(alwaysRun = true)
        public void setUpClass() {
@@ -107,6 +109,7 @@ public class CucumberTest {
        @Test(dataProvider = "scenarios")
        public void scenario(PickleWrapper pickleWrapper, FeatureWrapper featureWrapper) throws MalformedURLException {
               JavascriptExecutor jse = (JavascriptExecutor)getDriver();
+              if(System.getProperty("browser-type").equalsIgnoreCase("remote"))
               jse.executeScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\" "+       pickleWrapper.getPickle().getName()   +" \" }}");
               testNGCucumberRunner.runScenario(pickleWrapper.getPickle());
            }

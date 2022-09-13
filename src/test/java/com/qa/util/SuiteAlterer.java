@@ -17,8 +17,8 @@ import java.util.List;
 public class SuiteAlterer implements IAlterSuiteListener {
     @Override
     public void alter(List<XmlSuite> suites) {
-        int count;
-        if(System.getProperty("threadCount")==null) {
+        int count=5;
+        if(System.getProperty("threadCount")==null && System.getProperty("browser-type").equalsIgnoreCase("remote")) {
             // This will fetch the parallel_sessions_max_allowed for the account and set the threadCount to it
             URL url = null;
             try {
@@ -54,7 +54,7 @@ public class SuiteAlterer implements IAlterSuiteListener {
             }
             JSONObject myResponse = new JSONObject(response.toString());
             count = (int) myResponse.get("parallel_sessions_max_allowed");
-        }else
+        }else if(System.getProperty("threadCount")!=null)
             //Sets the thread count value via CLI
             count = Integer.parseInt(System.getProperty("threadCount"));
         XmlSuite suite = suites.get(0);
