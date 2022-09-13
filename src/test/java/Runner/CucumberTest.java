@@ -55,8 +55,8 @@ public class CucumberTest {
                      System.out.println("Starting Local");
                      l.start(options);
               }
-              SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
-              buildname = "Cucumber Java"+"-"+sdf.format(new Date());
+              //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
+              //buildname = "Cucumber Java"+"-"+sdf.format(new Date());
        }
        @BeforeClass(alwaysRun = true)
        public void setUpClass() {
@@ -93,7 +93,7 @@ public class CucumberTest {
                             accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
                      }
                      tlDriver.set( new RemoteWebDriver(
-                             new URL("http://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"), capabilities));
+                             new URL("https://" + username + ":" + accessKey + "@" + config.get("server") + "/wd/hub"), capabilities));
               }else
                      throw new AssertionError("Invalid input for browser");
               if(!capabilities.toString().contains("realMobile"))

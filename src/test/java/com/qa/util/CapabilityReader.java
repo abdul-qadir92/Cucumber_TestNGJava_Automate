@@ -32,9 +32,9 @@ public class CapabilityReader {
             browserstackOptions.put(pair.getKey().toString(), pair.getValue().toString());
         }
         // Set the build name for tests
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
-        //browserstackOptions.put("buildName",browserstackOptions.get("projectName")+"-"+sdf.format(new Date()));
-        browserstackOptions.put("buildName",CucumberTest.buildname);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YY hh.mm");
+        browserstackOptions.put("buildName",browserstackOptions.get("projectName")+"-"+sdf.format(new Date()));
+        //browserstackOptions.put("buildName",CucumberTest.buildname);
         if (System.getenv("BROWSERSTACK_BUILD_NAME") != null) {
             browserstackOptions.put("buildName", System.getenv("BROWSERSTACK_BUILD_NAME").toString());
         }

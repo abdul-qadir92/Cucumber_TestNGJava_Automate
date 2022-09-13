@@ -18,8 +18,8 @@
       "browserName": "Chrome",
       "browserVersion": "latest",
       "envOptions": {
-        "os": "OS X",
-        "osVersion": "Monterey"
+        "os": "Windows",
+        "osVersion": "11"
       }
     }
   }
