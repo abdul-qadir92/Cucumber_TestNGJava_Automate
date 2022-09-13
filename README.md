@@ -13,16 +13,19 @@ The Selenium tests are run on different platforms like on-prem and BrowserStack 
 :globe_with_meridians: Empowered to run on various platforms including **on-premise browsers**, browsers running on a remote selenium grid such as 
  **[BrowserStack Automate](https://www.browserstack.com/automate)**
 
-:rocket: Enables concurrent execution of cucumber scenarios across different platforms.
+:rocket: Enables concurrent execution of cucumber scenarios at scenario and feature level across different platforms.
 
-:test_tube: Three distinct layers of framework implementaion viz. Feature File, Step Definitions, Page Factory Classes to maintain the border between Business users and developers.
+:bulb: Run the builds with max concurrency as per the parallel quota on your BrowserStack Account.
+
+:computer: Control concurrency of the tests by setting thread count from terminal.
+
+:white_check_mark: Three distinct layers of framework implementaion viz. Feature File, Step Definitions, Page Factory Classes to maintain the border between Business users and developers.
 
 :recycle: Can be ran on any installed browsers onprem without downloading the respective driver executables.
 
 :zap: Single Runner class required to configure all parameters and plugins.
 
-:bulb: HTML and PDF reports generation with screenshots.
-
+:bar_chart: HTML and PDF reports generation with screenshots.
 
 ---
 
@@ -41,18 +44,22 @@ The Selenium tests are run on different platforms like on-prem and BrowserStack 
 ---
 ## About the tests in this repository
 
-This repository contains the following Selenium tests:
+This repository contains the following Cucumber Scenario tests:
 
-| Module   | Test name                          | Description |
-  | ---   | ---                                   | --- |
-| E2E      | End to End Scenario                | This test scenario verifies successful product purchase lifecycle end-to-end with verifying that 9 Apple products are only shown if the Apple vendor filter option is applied and verifies that the product prices are in ascending order when the product sort “Lowest to Highest” is applied. It demonstrates the [Page Factory Model design pattern](https://www.browserstack.com/guide/page-object-model-in-selenium)  |
-| User    | Login as Locked User               | This test verifies the login workflow error for a locked user. |
-| Offers   | Offers for Mumbai location     | This test mocks the GPS location for Mumbai and verifies that the product offers applicable for the Mumbai location are shown.   |
-| User     | Login as User with no image loaded | This test verifies that the product images load for user: "image_not_loading_user" on the e-commerce application. Since the images do not load, the test case assertion fails.|
-| User     | Login as User with existing Orders |  This test verifies that existing orders are shown for user: "existing_orders_user"  |
-  
+| Features | Tags | Test Name | Description |
+|--|--|--|--|
+| E2E | @e2e |End to End Scenario|This test scenario verifies successful product purchase lifecycle end-to-end with verifying that 9 Apple products are only shown if the Apple vendor filter option is applied and verifies that the product prices are in ascending order when the product sort “Lowest to Highest” is applied. It demonstrates the [Page Factory Model design pattern](https://www.browserstack.com/guide/page-object-model-in-selenium)|
+|User|@locked|Login as Locked User|This test verifies the login workflow error for a locked user.|
+|User|@noimage, @fail|Login as User with no image loaded| This test verifies that the product images load for user: “image_not_loading_user” on the e-commerce application. Since the images do not load, the test case assertion fails.|
+|User|@orders|Login as User with existing Orders| This test verifies that existing orders are shown for user: “existing_orders_user”|
+|Offers|@offers|Offers for Mumbai location|This test mocks the GPS location for Mumbai and verifies that the product offers applicable for the Mumbai location are shown. |
+
+ - `@test` will run all scenarios in **Offers** feature file.
+ -  `@users` will run all scenarios in **Users** feature file. 
+ - `@e2e` will run all scenarios in **E2E** feature file.
+ - `@regression` will run all scenarios in all the feature files.
+
 ---
-
 
 ## Test infrastructure environments
 
@@ -62,10 +69,9 @@ This repository contains the following Selenium tests:
 ---
 ## Configuring the maximum parallel test threads for this repository
 
-For all the parallel run configuration profiles, you can configure the maximum parallel test threads by changing the settings below. 
+For all the parallel run configuration profiles, tests will run with max parallels in your BrowserStack account, or you can configure the parallel test threads from the terminal
 
-
-    thread-count in the respective testng.xml files
+    "-DthreadCount=xx"
     
 |BrowserStack| onPrem |
 |--|--|
@@ -74,11 +80,7 @@ browserstack/conf/Run_Parallel_Test/parallel.testng.xml |  |
 |browserstack/conf/Run_Local_Test/local.testng.xml|
 |browserstack/conf/Run_Parallel_Test/parallel.testng.xml
 
----
-## Application Under Test URL 
 
-Set the `<Application_url></Application_url>` properties in the pom.xml to 
-> https://bstackdemo.com/
 
 ---
 # Test Reporting
@@ -99,12 +101,13 @@ This infrastructure points to running the tests on your own machine using any br
   To run any test scenario (e.g. End to End Scenario) on your own machine, use the following command, you can specify any cucumber tag from the feature files to run the scenarios at feature/scenario outline level in this Maven Profile.
   
 	Eg. "@e2e", "@noimage", "@offers" or any of the other test scenario tags, as outlined in [About the tests in this repository](#About-the-tests-in-this-repository) section. 
-  `<cucumber.filter.tags>@e2e</cucumber.filter.tags>`
+`"-Dcucumber.filter.tags=@e2e"`
 	
 	User can also specify the choice of browser in the `<browser-type>` tags of the profile to run the suite/scenarios in that browser.
 	Eg. `<browser-type>firefox</browser-type>`
   
-  thread-count can be set for the tests from the [testng.xml](testng.xml)
+  thread-count can be set for the tests from the terminal 
+  `"-DthreadCount=5"`
   
   Maven:
     ```sh
@@ -160,21 +163,23 @@ In this section, we will run the tests in parallel on a single browser on Browse
 - How to run the test?
 
   To run the tests in parallel on a single BrowserStack browser, use the following command:
-	
-	To point the tests on BrowserStack set the `<browser-type></browser-type>` property to `remote` in the Maven profile.
-
+  
   Maven:
   ```sh
   mvn test -P scenario-bs
   ```
 	
-	You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
+	You can mention any scenario from the feature files using the `-Dcucumber.filter.tags`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
 
 - Output
 
   This run profile executes any scenario/entire test suite in parallel on a single BrowserStack browser. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
-  - Note: By default, this execution would run maximum 5 test threads in parallel on BrowserStack. Thread count can be configured from [here](src/test/resources/browserstack/conf/Run_Single_Test/single.testng.xml) based on your requirements.
+  - Note: By default, this execution would run maximum test threads based on the parallel quota on your BrowserStack Account. Thread count can be configured as below based on your requirements.
+  
+   ```sh
+  mvn test -P scenario-bs "-Dcucumber.filter.tags=@regresssion" "-DthreadCount=3"
+  ```
 
 
 ### Run the entire test suite in parallel on multiple BrowserStack browsers
@@ -184,15 +189,13 @@ In this section, we will run the tests in parallel on multiple browsers on Brows
 - How to run the test?
 
   To run the entire test suite in parallel on multiple BrowserStack browsers/devices, use the following command:
-  
-  To point the tests on BrowserStack set the `<browser-type></browser-type>` property to `remote` in the Maven profile.
 
   Maven:
   ```sh
-  mvn test -P Suite-cross-bs
+  mvn test -P suite-cross-bs
   ```
 
-	You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel across multiple browsers/devices.
+	You can mention any scenario from the feature files using the `-Dcucumber.filter.tags`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel across multiple browsers/devices.
 ---	
 ### [Web application hosted on internal environment] Running your tests on BrowserStack using BrowserStackLocal
 
@@ -216,19 +219,13 @@ In this section, we will run the tests in parallel on multiple browsers on Brows
 - How to run the test?
 
   - To run any test scenario (e.g. End to End Scenario) on a single BrowserStack browser using BrowserStackLocal, use the following command:
-  
-To point the tests on BrowserStack set the `<browser-type></browser-type>` property to `remote` in the Maven profile.
-
- Set the `<local></local>` property in the Maven profile to `True` to enable local connection.
-
-Set the `<Application_url></Application_url>` properties in the pom.xml to your internal url i.e. `http://localhost:3000/`
-	
+ 	
   Maven:
   ```sh
   mvn test -P local-bs
   ```
 
-You can mention any scenario from the feature files using the `<cucumber.filter.tags>`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
+You can mention any scenario from the feature files using the `-Dcucumber.filter.tags`, tags defined at Feature level Eg. `@users` will run all the scenarios in the [Users Feature](src/test/resources/Features/Users.feature) file in parallel. Likewise `@regression` will run all the scenarios from all the Feature files in parallel.
 
 - Output
 
@@ -243,12 +240,6 @@ In this section, we will run the test cases to test the internally hosted websit
 
   To run the entire test suite in parallel on multiple devices and browsers using BrowserStackLocal, use the following command:
 
-	To point the tests on BrowserStack set the `<browser-type></browser-type>` property to `remote` in the Maven profile.
-
-	 Set the `<local></local>` property in the Maven profile to `True` to enable local connection.
-
-	Set the `<Application_url></Application_url>` properties in the pom.xml to your internal url i.e. `http://localhost:3000/`
-	
   Maven:
   ```sh
   mvn test -P local-cross-bs
@@ -258,7 +249,10 @@ In this section, we will run the test cases to test the internally hosted websit
 
   This run profile executes the entire test suite on an internally hosted web application on multiple browsers on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
-- Note: By default, this execution would run maximum 5 test threads in parallel on BrowserStack. Thread count can be configured from [here](src/test/resources/browserstack/conf/Run_Local_Parallel/localParallel.testng.xml) based on your requirements.
+- Note: By default, this execution would run maximum test threads based on the parallel quota on your BrowserStack Account. Thread count can be configured as below based on your requirements.
+  ```sh
+  mvn test -P local-cross-bs "-Dcucumber.filter.tags=@e2e" "-DthreadCount=3"
+  ```
 
 
 ## Additional Resources
@@ -273,6 +267,4 @@ In this section, we will run the test cases to test the internally hosted websit
 
 
 ## Open Issues
-- The thread count can be updated directly from the testng runner file
-- local tag is needed in the Maven profiles to enable Local Testing.
 - The PDF report breaks for the multiple scenarios executed in parallel on multiple devices/browsers.
